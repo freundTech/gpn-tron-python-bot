@@ -29,7 +29,7 @@ MESSAGES = [
     "Powered by asyncio!",
     "Powered by match statements!",
     "Python fast!",
-    #"Uses convolutions (poorly)",
+    # "Uses convolutions (poorly)",
     "cha bu duo",
     "No unicode in chat :(",
     "Sends messages every 3 seconds"
@@ -110,7 +110,7 @@ class TronBot:
                     if time.time() - now > 3:
                         await self.send_message("chat", random.choice(MESSAGES))
                         now = time.time()
-                    direction = self.find_move(True)
+                    direction = self.find_move(tick > self.height)
                     await self.send_message("move", direction)
                     print(f"Handled tick in {round((time.time_ns() - start) / 1_000_000, 2)} milliseconds.")
                     self.heads = np.full((self.width, self.height), EMPTY, dtype=np.int32)
@@ -150,6 +150,7 @@ class TronBot:
                 best_direction = direction
         return best_direction
 
+    # No longer used, as the new get_regions_map gives us this information for free
     def get_danger_map(self):
         heads = np.copy(self.heads)
         heads[heads == self.player_id] = 0
